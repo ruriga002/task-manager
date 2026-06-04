@@ -1,4 +1,3 @@
-# Import functions from task_manager.task_utils package
 from task_manager.task_utils import (
     add_task,
     mark_task_as_complete,
@@ -7,9 +6,8 @@ from task_manager.task_utils import (
     tasks
 )
 
-# Define the main function
 def main():
-    
+
     while True:
         print("\nTask Management System")
         print("1. Add Task")
@@ -18,7 +16,6 @@ def main():
         print("4. View Progress")
         print("5. Exit")
 
-        # Get user choice
         choice = input("Enter your choice (1-5): ")
 
         # Add task
@@ -29,58 +26,42 @@ def main():
 
             add_task(title, description, due_date)
 
-        # Mark task complete
+        # Mark complete
         elif choice == "2":
 
             if len(tasks) == 0:
                 print("No tasks available.")
-            else:
-                print("\nTask List:")
+                continue
 
-                for i, task in enumerate(tasks):
-                    status = (
-                        "Completed"
-                        if task["completed"]
-                        else "Pending"
-                    )
+            print("\nTask List:")
+            for i, task in enumerate(tasks):
+                status = "Completed" if task["completed"] else "Pending"
+                print(f"{i}. {task['title']} ({status})")
 
-                    print(f"{i}. {task['title']} ({status})")
+            try:
+                index = int(input("Enter task index to mark as complete: "))
+                mark_task_as_complete(index)
 
-                try:
-                    index = int(
-                        input(
-                            "Enter task index to mark as complete: "
-                        )
-                    )
+            except ValueError:
+                print("Error: Invalid task index.")
 
-                    mark_task_as_complete(index)
-
-                except ValueError:
-                    print("Error: Please enter a valid number.")
-
-        # View pending tasks
+        # View pending
         elif choice == "3":
             view_pending_tasks()
 
-        # View progress
+        # Progress
         elif choice == "4":
             progress = calculate_progress()
+            print(f"Task Completion Progress: {int(progress)}%")
 
-            print(
-                f"Task Completion Progress: "
-                f"{progress:.2f}%"
-            )
-
-        # Exit program
+        # Exit
         elif choice == "5":
             print("Exiting the program...")
             break
 
-        # Invalid choice
         else:
             print("Invalid choice. Please try again.")
 
 
-# Run the main function
 if __name__ == "__main__":
     main()
