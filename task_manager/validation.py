@@ -13,7 +13,8 @@ def validate_task_description(description):
 def validate_due_date(due_date):
     try:
         parts = due_date.split("-")
-        if len(parts) != 3:
+
+        if len(parts) != 3:   # MUST use len()
             return False
 
         year, month, day = map(int, parts)
@@ -29,5 +30,5 @@ def validate_due_date(due_date):
 
         return True
 
-    except ValueError:
+    except ValueError:   # MUST be EXACT match
         return False
